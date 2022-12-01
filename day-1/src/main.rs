@@ -29,17 +29,23 @@ fn main() {
 }
 
 pub fn optimised() -> (u32, u32) {
-    let mut elf_calories: Vec<u32> = INPUT.split_terminator("\r\n\r\n").map(|elf| 
-        elf.split_terminator("\r\n").map(|calorie| calorie.parse::<u32>().expect("Failed calorie conversion")).sum::<u32>()
-    ).collect();
+    let elf_total_calories = { 
+        let mut vec: Vec<u32> = INPUT.split_terminator("\r\n\r\n").map(|elf_foods| 
+            elf_foods
+                .split_terminator("\r\n")
+                .map(|calorie| calorie.parse::<u32>().expect("Failed calorie conversion")).sum::<u32>()
+        ).collect();
 
-    elf_calories.sort();
+        vec.sort();
 
-    let length = elf_calories.len();
+        vec
+    };
 
-    let max = elf_calories[length - 1];
+    let length = elf_total_calories.len();
 
-    let top_3_sum: u32 = elf_calories[length - 3..].iter().sum();
+    let max = elf_total_calories[length - 1];
+
+    let top_3_sum: u32 = elf_total_calories[length - 3..].iter().sum();
 
     (max, top_3_sum)
 }
