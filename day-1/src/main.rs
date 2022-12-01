@@ -30,11 +30,16 @@ fn main() {
 
 pub fn optimised() -> (u32, u32) {
     let elf_total_calories = { 
-        let mut vec: Vec<u32> = INPUT.split_terminator("\r\n\r\n").map(|elf_foods| 
-            elf_foods
-                .split_terminator("\r\n")
-                .map(|calorie| calorie.parse::<u32>().expect("Failed calorie conversion")).sum::<u32>()
-        ).collect();
+        let mut vec: Vec<u32> = 
+        INPUT
+            .split_terminator("\r\n\r\n")
+            .map(|elf_foods| 
+                elf_foods
+                    .split_terminator("\r\n")
+                    .map(|calorie| calorie.parse::<u32>().expect("Failed calorie conversion"))
+                    .sum()
+            )
+            .collect();
 
         vec.sort();
 
