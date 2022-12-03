@@ -1,3 +1,5 @@
+use core::panic;
+
 const INPUT: &str = include_str!("input.txt");
 
 fn main() {
@@ -21,11 +23,15 @@ fn main() {
     println!("{solution_2}");
 }
 
+const SMALL_A_UNICODE: u32 = 97;
+const CAPITAL_A_UNICODE: u32 = 65;
+const LETTERS: u32 = 26;
+
 fn priority(c: char) -> u32 {
-    if c.is_ascii_uppercase() {
-        c as u32 - 65 + 27
-    } else {
-        c as u32 - 96
+    match c {
+        'a'..='z' => c as u32 - SMALL_A_UNICODE + 1,
+        'A'..='Z' => c as u32 - CAPITAL_A_UNICODE + LETTERS + 1,
+        _ => panic!("Omg no way")
     }
 }
 

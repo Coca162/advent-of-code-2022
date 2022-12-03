@@ -1,8 +1,7 @@
 const INPUT: &str = include_str!("input.txt");
 
 fn main() {
-    // get raw file
-    let clean = INPUT.replace("\r\n", "\n");
+    let clean = INPUT.trim().replace("\r\n", "\n");
 
     //parse by getting elves first
     let elf_calories = clean.split_terminator("\n\n").map(|elf| {
