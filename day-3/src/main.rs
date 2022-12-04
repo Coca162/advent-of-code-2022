@@ -14,11 +14,7 @@ fn main() {
 
     println!("{solution_1}");
 
-    let solution_2: u32 = lines
-        .chunks(3)
-        .map(find_badge)
-        .map(priority)
-        .sum();
+    let solution_2: u32 = lines.chunks(3).map(find_badge).map(priority).sum();
 
     println!("{solution_2}");
 }
@@ -31,7 +27,7 @@ fn priority(c: char) -> u32 {
     match c {
         'a'..='z' => c as u32 - SMALL_A_UNICODE + 1,
         'A'..='Z' => c as u32 - CAPITAL_A_UNICODE + LETTERS + 1,
-        _ => panic!("Omg no way")
+        _ => panic!("Omg no way"),
     }
 }
 
