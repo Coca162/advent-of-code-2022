@@ -13,12 +13,12 @@ fn main() {
         .map(|((first_start, first_end), (second_start, second_end))| {
             (
                 (
-                    first_start.parse::<u32>().unwrap(),
-                    first_end.parse::<u32>().unwrap(),
+                    first_start.parse::<u8>().unwrap(),
+                    first_end.parse::<u8>().unwrap(),
                 ),
                 (
-                    second_start.parse::<u32>().unwrap(),
-                    second_end.parse::<u32>().unwrap(),
+                    second_start.parse::<u8>().unwrap(),
+                    second_end.parse::<u8>().unwrap(),
                 ),
             )
         })
