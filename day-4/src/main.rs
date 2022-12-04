@@ -39,7 +39,25 @@ fn main() {
         )
         .count();
 
-    println!("{inside}");
+        println!("{inside}");
 
-    println!("{overlaps}")
+        println!("{overlaps}")
+}
+
+#[allow(dead_code)]
+fn alternate_parse(input: &str) -> Option<((u8, u8), (u8, u8))> {
+    let tuple = input.split_once(',')?;
+
+    apply(tuple, |x| {
+        let tuple = x.split_once('-')?;
+
+        apply(tuple, |y| y.parse().ok())
+    })
+    
+}
+
+fn apply<Ab, C, F>((a, b): (Ab, Ab), f: F) -> Option<(C, C)>
+    where F : Fn(Ab) -> Option<C>
+{
+    Some((f(a)?, f(b)?))
 }
