@@ -26,18 +26,17 @@ fn main() {
 
     let inside = elf_tuple_pairs
         .iter()
-        .filter(|((first_min, first_max), (second_min, second_max))| {
+        .filter(|((first_min, first_max), (second_min, second_max))|
             (first_min >= second_min && first_max <= second_max)
                 || (second_min >= first_min && second_max <= first_max)
-        })
+        )
         .count();
 
     let overlaps = elf_tuple_pairs
         .iter()
-        .filter(|((first_min, first_max), (second_min, second_max))| {
-            (first_min >= second_min || first_max >= second_min)
-                && (second_min >= first_min || second_max >= first_min)
-        })
+        .filter(|((first_min, first_max), (second_min, second_max))|
+            first_max >= second_min && second_max >= first_min
+        )
         .count();
 
     println!("{inside}");
