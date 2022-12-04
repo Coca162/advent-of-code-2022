@@ -14,10 +14,10 @@ fn main() {
     }).count();
 
     let overlaps = elf_tuple_pairs
-    .iter()
-    .filter(|((first_min, first_max), (second_min, second_max))| 
-        (first_min >= second_min || first_max >= second_min) && (second_min >= first_min || second_max >= first_min)
-    ).count();
+        .iter()
+        .filter(|((first_min, first_max), (second_min, second_max))| 
+            (first_min >= second_min || first_max >= second_min) && (second_min >= first_min || second_max >= first_min)
+        ).count();
 
     println!("{inside}");
 
