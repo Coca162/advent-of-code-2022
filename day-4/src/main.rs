@@ -1,7 +1,7 @@
 const INPUT: &str = include_str!("input.txt");
 
 fn main() {
-    let elf_tuple_pairs = INPUT
+    let elf_tuple_pairs: Vec<((u8, u8), (u8, u8))> = INPUT
         .lines()
         .map(|elves| elves.split_once(',').unwrap())
         .map(|(first, second)| {
@@ -13,16 +13,16 @@ fn main() {
         .map(|((first_start, first_end), (second_start, second_end))| {
             (
                 (
-                    first_start.parse::<u8>().unwrap(),
-                    first_end.parse::<u8>().unwrap(),
+                    first_start.parse().unwrap(),
+                    first_end.parse().unwrap(),
                 ),
                 (
-                    second_start.parse::<u8>().unwrap(),
-                    second_end.parse::<u8>().unwrap(),
+                    second_start.parse().unwrap(),
+                    second_end.parse().unwrap(),
                 ),
             )
         })
-        .collect::<Vec<_>>();
+        .collect();
 
     let inside = elf_tuple_pairs
         .iter()
