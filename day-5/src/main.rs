@@ -26,11 +26,7 @@ fn main() {
         x.execute_1(&mut dock_1);
     };
 
-    let mut day_1 = dock_1.iter().collect::<Vec<_>>();
-
-    day_1.sort_by_key(|x| x.0);
-
-    day_1.iter().map(|x| x.1[x.1.len() - 1]).for_each(|x| println!("{x}"));
+    dock_1.iter().map(|x| x[x.len() - 1]).for_each(|x| println!("{x}"));
 
     println!("2nd");
 
@@ -40,21 +36,14 @@ fn main() {
         x.execute_2(&mut dock_2);
     };
 
-    let mut day_2 = dock_2.iter().collect::<Vec<_>>();
-
-    day_2.sort_by_key(|x| x.0);
-
-    day_2.iter().map(|x| x.1[x.1.len() - 1]).for_each(|x| println!("{x}"));
-
+    dock_2.iter().map(|x| x[x.len() - 1]).for_each(|x| println!("{x}"));
 }
 
-fn initial_state(input: &str) -> IResult<&str, HashMap<u8, Vec<char>>> {
+fn initial_state(input: &str) -> IResult<&str, Vec<Vec<char>>> {
     let (rest, mut crates) = crate_space(input)?;
     let (rest, labels) = label_list(rest)?;
 
-    println!("{crates:?}");
-
-    let mut hash = HashMap::with_capacity(labels.len());
+    let mut vec = Vec::with_capacity(labels.len());
 
     labels.iter().rev().copied().for_each(|label| {
         let mut stack= Vec::new();
@@ -65,10 +54,12 @@ fn initial_state(input: &str) -> IResult<&str, HashMap<u8, Vec<char>>> {
             }
         }
 
-        hash.insert(label, stack);
+        vec.push(stack);
     });
 
-    Ok((rest, hash))
+    vec.reverse();
+
+    Ok((rest, vec))
 }
 
 fn instruction_all(input: &str) -> IResult<&str, Vec<Instruction>> {
@@ -118,27 +109,27 @@ struct Instruction {
 }
 
 impl Instruction {
-    pub fn execute_1(&self, dock: &mut HashMap<u8, Vec<char>>) {
-        let mut to = dock.get(&self.to).unwrap().clone();
+    pub fn execute_1(&self, dock: &mut [Vec<char>]) {
+        let mut to = dock.get(self.to as usize - 1).unwrap().clone();
 
-        let from = dock.get_mut(&self.from).unwrap();
-
-        let drained = from.drain(from.len() - self.amount as usize..);
-
-        to.extend(drained);
-
-        dock.insert(self.to, to);
-    }
-
-    pub fn execute_2(&self, dock: &mut HashMap<u8, Vec<char>>) {
-        let mut to = dock.get(&self.to).unwrap().clone();
-
-        let from = dock.get_mut(&self.from).unwrap();
+        let from = dock.get_mut(self.from as usize - 1).unwrap();
 
         let drained = from.drain(from.len() - self.amount as usize..);
 
         to.extend(drained.rev());
 
-        dock.insert(self.to, to);
+        dock[self.to as usize - 1] = to;
+    }
+
+    pub fn execute_2(&self, dock: &mut [Vec<char>]) {
+        let mut to = dock.get(self.to as usize - 1).unwrap().clone();
+
+        let from = dock.get_mut(self.from as usize - 1).unwrap();
+
+        let drained = from.drain(from.len() - self.amount as usize..);
+
+        to.extend(drained);
+
+        dock[self.to as usize - 1] = to;
     }
 }
