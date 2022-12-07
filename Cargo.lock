@@ -93,12 +93,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "day-6"
-version = "0.1.0"
-
-[[package]]
 name = "day-7"
 version = "0.1.0"
+dependencies = [
+ "nom",
+]
 
 [[package]]
 name = "day-8"
